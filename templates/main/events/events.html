@@ -1,0 +1,16 @@
+{% extends "main/layout/base.html" %}
+{% load static %}
+{% block title %}Мероприятия{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Список мероприятий</h1>
+        <ul class="list-group">
+            {% for event in events %}
+            <li class="list-group-item">
+                <a href="{{ event.get_absolute_url }}">{{ event.name }}</a> - 
+                {{ event.date }} at {{ event.location }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

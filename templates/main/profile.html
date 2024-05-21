@@ -1,0 +1,35 @@
+{% extends 'main/layout/base.html' %}
+{% load static %}
+{% block title %}Личный кабинет{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <h1>Личный кабинет</h1>
+        {% if user.is_organizer %}
+            <h2>Информация организатора</h2>
+            <p><strong>Название организации:</strong> {{ user.org_name }}</p>
+            <p><strong>ИНН:</strong> {{ user.INN }}</p>
+            <p><strong>Аватар:</strong>
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" class="img-thumbnail" alt="Аватар организатора">
+                {% else %}
+                    Нет аватара.
+                {% endif %}
+            </p>
+        {% else %}
+            <h2>Информация пользователя</h2>
+            <p><strong>Логин:</strong> {{ user.username }}</p>
+            <p><strong>Имя:</strong> {{ user.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+            <h2>Фотографии</h2>
+            <div class="row">
+                {% for photo in user.personimage_set.all %}
+                    <div class="col-md-3">
+                        <img src="{{ photo.image.url }}" class="img-thumbnail mb-2" alt="Фото пользователя">
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="{% url 'main:upload_photos' %}" class="btn btn-primary">Загрузить новые фотографии</a>
+        {% endif %}
+        <p><a href="{% url 'main:change_password' %}" class="btn btn-warning">Изменить пароль</a></p>
+    </div>
+{% endblock %}

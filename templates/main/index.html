@@ -1,0 +1,25 @@
+{% extends "main/layout/base.html" %}
+{% load static %}
+{% block title %}Главная страница{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Добро пожаловать на наш сайт организации мероприятий!</h1>
+        <p>Здесь вы можете зарегистрироваться или авторизоваться как организатор или участник мероприятия.</p>
+        <nav>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{% url 'main:registration_organization' %}">Регистрация организатора</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'main:registration_user' %}">Регистрация участника</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'main:login_organization' %}">Авторизация организатора</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'main:login_user' %}">Авторизация участника</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "main/layout/base.html" %}
+{% load static %}
+{% block title %}Авторизация{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <form method="post" name="login">
+            <h2>Авторизация</h2>
+            <div class="push30"></div>
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary" value="Войти" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

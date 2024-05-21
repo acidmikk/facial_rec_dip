@@ -1,0 +1,25 @@
+{% extends "main/layout/base.html" %}
+{% load static %}
+{% block title %}{{ event.name }}{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        {% if user.is_authenticated and not user.is_organizer %}
+        {% if is_registered %}
+            <p>Вы уже зарегистрированы на это мероприятие.</p>
+        {% elif event.attendees.count < event.exp_count_guests %}
+            <a href="{% url 'register_for_event' event.id %}" class="btn btn-primary">Участвовать</a>
+        {% else %}
+            <p>Места на мероприятие закончились.</p>
+        {% endif %}
+        {% endif %}
+        <h1>{{ event.name }}</h1>
+        <p><strong>Дата:</strong> {{ event.date }}</p>
+        <p><strong>Время:</strong> {{ event.time_start }}</p>
+        <p><strong>Место:</strong> {{ event.location }}</p>
+        <p><strong>Максимальное количество участников:</strong> {{ event.exp_count_guests }}</p>
+        
+        {% if user.is_authenticated and user == event.org_user %}
+            <a href="{% url 'edit_event' event.id %}" class="btn btn-secondary">Редактировать мероприятие</a>
+        {% endif %}
+    </div>
+{% endblock %}
