@@ -27,5 +27,6 @@ urlpatterns = [
         path('<int:event_id>/register/', register_for_event, name='register_for_event'),
         path('<int:event_id>/', event_detail, name='event_detail'),
     ])),
+    path('download/event/<int:event_id>/', download_event_file, name='download_event_file'),
     path('', index, name='index'),
 ]

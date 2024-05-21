@@ -1,10 +1,11 @@
+import os
 from urllib import request
 from django.shortcuts import render
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse, Http404
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
@@ -142,3 +143,17 @@ def register_for_event(request, event_id):
     PersonEvent.objects.create(person=request.user, event=event)
     return redirect('main:event_detail', event_id=event.id)
 
+
+def download_event_file(request, event_id):
+    # Получаем мероприятие по ID
+    event = get_object_or_404(Event, id=event_id)
+    # Формируем путь к файлу
+    file_path = os.path.join(settings.MEDIA_ROOT, f"event_{event_id}_encodings.pkl")
+
+    # Проверяем, существует ли файл
+    if os.path.exists(file_path):
+        # Возвращаем файл в ответ на запрос
+        return FileResponse(open(file_path, 'rb'), content_type='application/octet-stream')
+    else:
+        # Если файл не найден, возвращаем 404 ошибку
+        raise Http404("Файл не найден")
